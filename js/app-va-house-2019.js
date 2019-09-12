@@ -91,12 +91,6 @@ $(document).ready(function() {
   let map_help = $("#welcome-map-help").html();
   app.welcome = Handlebars.compile(map_help);
   $sidebar.append(app.welcome);
-
-  Tabletop.init({
-    key: public_spreadsheet_url,
-    callback: showInfo,
-    simpleSheet: true
-  });
 });
 function showInfo(sheet_data, tabletop) {
   flipped = false;
@@ -109,7 +103,7 @@ function showInfo(sheet_data, tabletop) {
 }
 
 function loadGeo() {
-  L.tileLayer(
+  let tileLayer = L.tileLayer(
     "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw",
     {
       maxZoom: 18,
@@ -120,7 +114,9 @@ function loadGeo() {
         'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       id: "mapbox.light"
     }
-  ).addTo(map);
+  );
+
+  tileLayer.addTo(map);
 
   normalLayer = L.geoJson(geosenate, {
     onEachFeature: onEachFeature,
@@ -162,7 +158,7 @@ function highlightFeature(e) {
     weight: 5,
     color: "#666",
     dashArray: "",
-    fillOpacity: 0.86
+    fillOpacity: 0.2
   });
   if (!freeze) {
     html = app.infoboxTemplate(memberDetail);
